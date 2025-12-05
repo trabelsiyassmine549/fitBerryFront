@@ -1,0 +1,43 @@
+/* --- 4. What is FitBerry Section --- */
+.what-is-section {
+ background-color: #fff;
+}
+.what-is-content {
+ display: flex;
+ align-items: center;
+ max-width: 1200px;
+ margin: 0 auto;
+ gap: 40px;
+}
+.what-is-image {
+ flex: 1;
+}
+.what-is-image img {
+ max-width: 100%;
+}
+.what-is-list {
+ flex: 1;
+}
+.what-is-list h2 {
+ margin-bottom: 30px;
+}
+.what-is-list ul {
+ list-style: none;
+}
+.what-is-list li {
+ font-size: 1.2rem;
+ margin-bottom: 15px;
+ display: flex;
+ align-items: center;
+}
+.what-is-list li::before {
+ content: '';
+ display: inline-block;
+ width: 18px;
+ height: 18px;
+ border-radius: 50%;
+ background-color: var(--color-red);
+ opacity: 0.3;
+ margin-right: 15px;
+ flex-shrink: 0;
+}

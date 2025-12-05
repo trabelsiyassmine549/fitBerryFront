@@ -1,0 +1,94 @@
+<div>
+  <!-- Notification -->
+  <div *ngIf="showNotification()" [class]="showNotification()?.type">
+    {{ showNotification()?.message }}
+  </div>
+
+  <!-- Form -->
+  <form (ngSubmit)="onSubmit()">
+    <h2>{{ pageTitle() }}</h2>
+
+    <!-- Prénom -->
+    <div>
+      <label>Prénom *</label>
+      <input
+        type="text"
+        [value]="nutritionnisteData().prenom"
+        (input)="updateField('prenom', $event)"
+        required>
+    </div>
+
+    <!-- Nom -->
+    <div>
+      <label>Nom *</label>
+      <input
+        type="text"
+        [value]="nutritionnisteData().nom"
+        (input)="updateField('nom', $event)"
+        required>
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label>Email *</label>
+      <input
+        type="email"
+        [value]="nutritionnisteData().email"
+        (input)="updateField('email', $event)"
+        required>
+    </div>
+
+    <!-- Téléphone -->
+    <div>
+      <label>Téléphone</label>
+      <input
+        type="tel"
+        [value]="nutritionnisteData().telephone || ''"
+        (input)="updateField('telephone', $event)">
+    </div>
+
+    <!-- Spécialité -->
+    <div>
+      <label>Spécialité</label>
+      <div>
+        <label *ngFor="let spec of specialites">
+          <input
+            type="radio"
+            name="specialite"
+            [value]="spec"
+            [checked]="nutritionnisteData().specialite === spec"
+            (change)="selectSpecialite($event)">
+          {{ spec }}
+        </label>
+      </div>
+    </div>
+
+    <!-- Spécialité personnalisée -->
+    <div *ngIf="isOtherSelected()">
+      <label>Spécialité personnalisée</label>
+      <input
+        type="text"
+        [value]="nutritionnisteData().specialite"
+        (input)="updateField('specialite', $event)">
+    </div>
+
+    <!-- Actif -->
+    <div>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="nutritionnisteData().actif"
+          (change)="updateField('actif', $event)">
+        Actif
+      </label>
+    </div>
+
+    <!-- Actions -->
+    <div>
+      <button type="button" (click)="onCancel()">Annuler</button>
+      <button type="submit" [disabled]="isSubmitting() || !isFormValid()">
+        {{ isSubmitting() ? 'Enregistrement...' : (isEditMode ? 'Mettre à jour' : 'Ajouter') }}
+      </button>
+    </div>
+  </form>
+</div>

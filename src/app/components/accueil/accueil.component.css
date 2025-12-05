@@ -1,0 +1,9 @@
+/* All other styles are now in src/styles.css or in their
+  own component .css files inside the 'sections' folder.
+*/
+.accueil-wrapper {
+ min-height: 100vh;
+ display: flex;
+ flex-direction: column;
+ overflow-x: hidden; 
+}

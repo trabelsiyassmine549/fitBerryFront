@@ -1,0 +1,36 @@
+/* --- 9. CTA Banner Section --- */
+.cta-banner-section {
+ background-color: var(--color-bg-medium-green);
+ text-align: center;
+}
+.cta-banner-content {
+ max-width: 800px;
+ margin: 0 auto;
+}
+.cta-banner-content h2 {
+ font-size: 2.2rem;
+ margin-bottom: 30px;
+ color: var(--color-text-dark);
+}
+.btn-dark-green {
+ background-color: var(--color-btn-dark-green);
+ color: #fff;
+}
+.cta-banner-content .btn {
+ margin-bottom: 30px;
+}
+.cta-features {
+ display: flex;
+ justify-content: space-between;
+ gap: 20px;
+}
+.cta-features p {
+ display: flex;
+ align-items: center;
+ font-size: 1rem;
+ color: var(--color-text-dark);
+}
+.cta-features .check-icon {
+ font-size: 1.2rem;
+margin-right: 8px;
+}

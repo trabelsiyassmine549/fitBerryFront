@@ -1,0 +1,145 @@
+/* --- 1. Hero Section (Green Design) --- */
+
+@keyframes fadeInUp {
+ 0% {
+ opacity: 0;
+ transform: translateY(20px);
+ }
+ 100% {
+ opacity: 1;
+ transform: translateY(0);
+ }
+}
+
+.hero-section {
+ /* 1. Light green background from image */
+ background-color: #f5fcf5; 
+ padding: 60px 8% 80px;
+ display: flex;
+ justify-content: center;
+ position: relative;
+ overflow: hidden;
+}
+
+/* 3. Removed curve styles (already done in your code) */
+
+.hero-content {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ width: 100%;
+ max-width: 1200px;
+ margin: 0 auto;
+ position: relative;
+ z-index: 2;
+}
+.hero-text {
+ flex: 0 0 450px;
+ padding-right: 20px;
+ text-align: left;
+ animation: fadeInUp 0.8s ease-out forwards;
+}
+.hero-text h1 {
+ font-size: 3.5rem;
+ line-height: 1.2;
+ margin-bottom: 20px;
+ color: #333; /* Dark color for "living made easy!!" */
+ font-weight: 300; /* 4. Light weight for "living made easy!!" */
+}
+.hero-text h1 .text-bold {
+
+ color: #EB6A51; 
+ font-weight: 700; 
+}
+.hero-text p {
+ font-size: 1.05rem;
+ /* Darker paragraph text to match image */
+ color: #333; 
+ margin-bottom: 30px;
+ max-width: 350px;
+}
+
+.btn-signin-white {
+
+ background: #D9E090;
+
+ color: #333;
+ padding: 12px 35px;
+
+ border-radius: 30px; 
+ box-shadow: none; 
+ border: none; 
+ transition: all 0.3s ease;
+ font-weight: 600;
+ cursor: pointer; 
+}
+.btn-signin-white:hover {
+
+ background: #c8d182;
+ transform: none; 
+ box-shadow: none;
+}
+.signin-subtext {
+ font-size: 0.85rem !important;
+ color: #555 !important; 
+ margin-top: 12px;
+ margin-left: 2px;
+ margin-bottom: 0 !important;
+}
+.hero-image {
+ flex: 1;
+ display: flex;
+ justify-content: flex-end;
+ align-items: center;
+ padding-left: 20px;
+ opacity: 0;
+ animation: fadeInUp 0.8s ease-out 0.2s forwards;
+}
+.hero-image img {
+ /* 9. Adjusted max-width, 550px is good */
+ max-width: 550px; 
+ height: auto;
+ border-radius: 0;
+ box-shadow: none;
+ display: block;
+}
+/* 10. Removed hover zoom (already done in your code) */
+
+/* --- Responsive Design for Mobile --- */
+@media (max-width: 768px) {
+.hero-section {
+ padding: 40px 8%;
+ }
+ .hero-content {
+ flex-direction: column;
+ gap: 40px;
+ }
+ .hero-text {
+ flex: 1 1 auto;
+ text-align: left;
+ padding-right: 0;
+ width: 100%;
+ }
+
+ .hero-text h1 {
+ font-size: 2.8rem;
+ }
+
+ .hero-text p {
+ max-width: 100%;
+ }
+
+ .hero-image {
+ padding-left: 0;
+ justify-content: center;
+ width: 100%;
+ }
+
+ .hero-image img {
+ max-width: 100%;
+ }
+
+ .signin-subtext {
+ margin-left: 2px;
+ }
+}

@@ -1,0 +1,14 @@
+/* --- 6. Cost Banner Section --- */
+.cost-banner-section {
+ background-color: #fff;
+ text-align: center;
+}
+.cost-banner-section h2 {
+ font-size: 2rem;
+ font-weight: 500;
+ line-height: 1.5;
+ color: var(--color-text-dark);
+}
+.cost-banner-section h2 .text-red {
+font-weight: 700;
+}

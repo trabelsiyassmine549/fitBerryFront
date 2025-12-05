@@ -1,0 +1,88 @@
+<div class="min-h-screen bg-gradient-to-br from-[#F8FEDA] via-white to-[#CCB1F6]/20 py-8">
+  <div class="max-w-2xl mx-auto p-8">
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-[#F8FEDA] to-[#CCB1F6]/20 p-8 border-b border-gray-200">
+        <h2 class="text-3xl font-bold text-[#333333] mb-2">
+          Create a New Article
+        </h2>
+        <div class="h-1 w-20 bg-gradient-to-r from-[#F47552] to-[#F8D459] rounded-full"></div>
+      </div>
+
+      <form (ngSubmit)="createArticle()" class="p-8">
+
+        <!-- Title -->
+        <div class="mb-6">
+          <label for="titre" class="block text-sm font-semibold text-[#333333] mb-2">
+            Title <span class="text-[#F47552]">*</span>
+          </label>
+          <input type="text" id="titre" name="titre"
+                 [(ngModel)]="article.titre"
+                 required
+                 placeholder="Health Benefits of Fibers"
+                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-[#CCB1F6] focus:border-[#CCB1F6] transition-all duration-300">
+        </div>
+
+        <!-- Description -->
+        <div class="mb-6">
+          <label for="description" class="block text-sm font-semibold text-[#333333] mb-2">
+            Description <span class="text-[#F47552]">*</span>
+          </label>
+          <textarea id="description" name="description" rows="6"
+                    [(ngModel)]="article.description"
+                    required
+                    placeholder="Fibers play an essential role in digestion..."
+                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-[#CCB1F6] focus:border-[#CCB1F6] transition-all duration-300 resize-none">
+          </textarea>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="mb-8">
+          <label class="block text-sm font-semibold text-[#333333] mb-2">
+            Article Image (Optional)
+          </label>
+
+          <!-- Image Preview -->
+          <div *ngIf="imagePreview" class="mb-4 relative group">
+            <img [src]="imagePreview" alt="Preview" class="w-full h-56 object-cover rounded-2xl shadow-lg">
+            <button type="button" (click)="removeImage()"
+                    class="absolute top-3 right-3 bg-[#F47552] text-white p-2.5 rounded-full hover:bg-[#F47552]/90 transition-all duration-300 shadow-lg hover:scale-110">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- File Input -->
+          <div class="border-2 border-dashed border-[#CCB1F6]/50 rounded-2xl p-8 text-center hover:border-[#CCB1F6] hover:bg-[#F8FEDA]/30 transition-all duration-300">
+            <input type="file"
+                   #fileInput
+                   (change)="onFileSelected($event)"
+                   accept="image/*"
+                   class="hidden">
+
+            <div class="w-16 h-16 bg-gradient-to-br from-[#F8D459] to-[#CDE26D] rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+
+            <button type="button" (click)="fileInput.click()"
+                    class="px-6 py-2.5 bg-gradient-to-r from-[#CCB1F6] to-[#CCB1F6]/80 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+              Choose an Image
+            </button>
+            <p class="text-sm text-gray-500 mt-3">PNG, JPG, GIF up to 10MB</p>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+                [disabled]="isSubmitting"
+                class="w-full px-6 py-4 bg-gradient-to-r from-[#CDE26D] to-[#CDE26D]/80 text-[#333333] font-bold text-lg rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+          {{ isSubmitting ? 'Publishing...' : 'Publish Article' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

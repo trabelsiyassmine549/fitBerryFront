@@ -1,0 +1,43 @@
+/* --- 10. Help/CTA Section --- */
+.help-cta-section {
+ background-color: #fff;
+}
+.help-cta-container {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ background-color: var(--color-bg-light-green);
+ border-radius: 20px;
+ padding: 50px;
+ max-width: 1000px;
+ margin: 0 auto;
+}
+.help-cta-text {
+ flex: 2;
+}
+.help-cta-text h2 {
+ font-size: 2rem;
+ max-width: 450px;
+ margin-bottom: 25px;
+ color: var(--color-text-dark);
+}
+.help-cta-icon {
+ flex: 1;
+ text-align: right;
+ font-size: 10rem;
+ font-weight: bold;
+ color: var(--color-red);
+ opacity: 0.8;
+}
+/* This component also uses .btn-signin */
+.btn-signin {
+ background: var(--color-btn-light-green-gradient);
+ color: var(--color-text-dark);
+ padding: 12px 30px; 
+ border-radius: 25px; 
+ box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.btn-signin:hover {
+ transform: translateY(-1px);
+ box-shadow: 0 7px 18px rgba(0,0,0,0.15);
+}

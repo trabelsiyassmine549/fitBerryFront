@@ -1,0 +1,28 @@
+/* --- 2. Features 2x2 Grid --- */
+.features-grid-section {
+ background-color: #fff;
+ max-width: 1200px;
+ margin: 0 auto;
+}
+.features-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 40px 60px;
+}
+.feature-item {
+ display: flex;
+ align-items: flex-start;
+ gap: 20px;
+}
+.feature-item img {
+ max-width: 100px;
+ height: auto;
+}
+.feature-item h3 {
+ font-size: 1.4rem;
+ margin-bottom: 10px;
+ color: var(--color-text-dark);
+}
+.feature-item p {
+font-size: 1rem;
+}

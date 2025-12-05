@@ -1,0 +1,282 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Navbar -->
+
+  <nav class="bg-white shadow-lg border-b border-gray-200 ">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-30 relative z-40">
+
+        <!-- Logo -->
+        <div class=" flex items-center">
+          <div class="flex-shrink-0 flex items-center">
+            <div class="w-8 h-8 bg-gradient-to-r from-[#CDE26D] to-[#CCB1F6] rounded-lg flex items-center justify-center mr-3">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <span class="text-lg font-bold text-gray-800">NutriArticles</span>
+          </div>
+        </div>
+
+        <!-- User -->
+
+        <div class="flex items-center space-x-4">
+          <app-notification-modal></app-notification-modal>
+
+           <div class="flex items-center space-x-3">
+             <span class="text-sm text-gray-700 font-medium">{{ currentUserName || 'User' }}</span>
+            <div class="w-8 h-8 bg-gradient-to-r from-[#CDE26D] to-[#CCB1F6] rounded-full flex items-center justify-center">
+              <span class="text-white font-semibold text-xs">{{ currentUserInitials || 'U' }}</span>
+            </div>
+          </div>
+
+          <!-- Logout -->
+          <button (click)="logout()"
+                  class="px-4 py-2 text-red-600 hover:text-red-700 transition-colors duration-300 font-medium flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="min-h-screen bg-gradient-to-br from-[#F8FEDA] via-white to-[#CCB1F6]/20 py-8">
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+
+        <div>
+          <h2 class="text-4xl font-bold text-[#333333] mb-2">
+            {{ pageTitle }}
+          </h2>
+          <div class="h-1 w-24 bg-gradient-to-r from-[#F47552] to-[#F8D459] rounded-full"></div>
+        </div>
+        <button (click)="openCreateModal()"
+           class="group px-6 py-3 bg-gradient-to-r from-[#CDE26D] to-[#CDE26D]/80 text-[#333333] font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-2 whitespace-nowrap">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:rotate-90 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+          </svg>
+           Add Article
+        </button>
+
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="articles.length === 0" class="text-center py-20">
+        <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-12 max-w-md mx-auto border border-[#CCB1F6]/30">
+          <div class="w-20 h-20 bg-gradient-to-br from-[#F47552] to-[#F8D459] rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <p class="text-xl font-semibold text-[#333333] mb-2">No articles found</p>
+          <p class="text-gray-600 mb-6">Start by creating your first article</p>
+          <button (click)="openCreateModal()" class="px-6 py-3 bg-gradient-to-r from-[#F47552] to-[#F8D459] text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
+            Create your first article
+          </button>
+        </div>
+      </div>
+
+      <!-- Articles Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div *ngFor="let article of articles"
+             class="group bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+
+          <!-- Article Image -->
+          <div class="relative h-56 bg-gradient-to-br from-[#CCB1F6]/20 to-[#F8FEDA] overflow-hidden">
+            <img [src]="getImageUrl(article.imageURL)"
+                 [alt]="article.titre"
+                 (error)="handleImageError($event)"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                 loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+
+          <!-- Article Content -->
+          <div class="p-6 flex-grow">
+            <h3 class="text-xl font-bold text-[#333333] mb-3 line-clamp-2 group-hover:text-[#F47552] transition-colors duration-300">
+              {{ article.titre }}
+            </h3>
+            <p class="text-gray-600 line-clamp-3 leading-relaxed">
+              {{ article.description }}
+            </p>
+
+            <!-- Author -->
+            <div *ngIf="article.auteurNom || article.auteurPrenom" class="mt-4 flex items-center gap-2">
+              <div class="w-8 h-8 bg-gradient-to-br from-[#CCB1F6] to-[#F47552] rounded-full flex items-center justify-center">
+                <span class="text-white text-sm font-bold">{{ (article.auteurPrenom || 'A')[0] }}</span>
+              </div>
+              <span class="text-sm text-gray-500 font-medium">{{ article.auteurPrenom }} {{ article.auteurNom }}</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="px-4 bg-gradient-to-r from-[#F8FEDA]/30 to-[#CCB1F6]/10 border-t border-gray-100 grid grid-cols-2 gap-3 action-buttons-wrapper">
+            <button (click)="deleteArticle(article.id!)"
+                    class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#F47552] to-[#F47552]/80 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              Delete
+            </button>
+            <button (click)="openEditModal(article)"
+                    class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#CCB1F6] to-[#CCB1F6]/80 hover:shadow-lg transition-all duration-300 hover:scale-105">
+               Edit
+            </button>
+          </div>
+          <!-- Comments Button -->
+          <button (click)="selectedArticleId === article.id ? closeComments() : viewComments(article.id!)"
+            class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r
+            from-[#CDE26D] to-[#b8d14a] hover:shadow-lg transition-all duration-300 hover:scale-105
+            col-span-2 m-3">
+            {{ selectedArticleId === article.id ? 'Hide' : 'Comments' }}
+          </button>
+
+          <!-- Comments Section -->
+          <div *ngIf="selectedArticleId === article.id" class="comments-section">
+            <div class="comments-header">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+              </svg>
+              <h4>Comments ({{ commentaires.length }})</h4>
+            </div>
+
+            <!-- Loading -->
+            <div *ngIf="isLoadingComments" class="loading-container-small">
+              <div class="spinner-small"></div>
+              <p>Loading comments...</p>
+            </div>
+
+            <!-- No Comments -->
+            <div *ngIf="!isLoadingComments && commentaires.length === 0" class="no-comments">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+              </svg>
+              <p>No comments yet</p>
+            </div>
+
+            <!-- Comments List -->
+            <div *ngIf="!isLoadingComments && commentaires.length > 0" class="comments-list">
+              <div *ngFor="let c of commentaires" class="comment-card">
+                <div class="comment-header">
+                  <strong class="comment-title">{{ c.titre }}</strong>
+                  <span class="comment-user">User #{{ c.userId }}</span>
+                </div>
+                <p class="comment-description">{{ c.description }}</p>
+                <small class="comment-date" *ngIf="c.createdAt">
+                  {{ c.createdAt | date:'dd/MM/yyyy at HH:mm' }}
+                </small>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Create/Edit Modal -->
+<div *ngIf="showModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn" (click)="closeModal()">
+  <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
+
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-[#F8FEDA] to-[#CCB1F6]/20">
+      <h3 class="text-2xl font-bold text-[#333333]">
+        {{ isEditMode ? 'Edit Article' : 'Create New Article' }}
+      </h3>
+      <button (click)="closeModal()" class="text-gray-400 hover:text-[#F47552] transition-colors duration-300 hover:rotate-90 transform">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <form (ngSubmit)="submitArticle()" class="p-6">
+
+      <!-- Title -->
+      <div class="mb-5">
+        <label for="titre" class="block text-sm font-semibold text-[#333333] mb-2">
+          Title <span class="text-[#F47552]">*</span>
+        </label>
+        <input type="text" id="titre" name="titre"
+               [(ngModel)]="currentArticle.titre"
+               required
+               placeholder="Health Benefits of Fibers"
+               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-[#CCB1F6] focus:border-[#CCB1F6] transition-all duration-300">
+      </div>
+
+      <!-- Description -->
+      <div class="mb-5">
+        <label for="description" class="block text-sm font-semibold text-[#333333] mb-2">
+          Description <span class="text-[#F47552]">*</span>
+        </label>
+        <textarea id="description" name="description" rows="6"
+                  [(ngModel)]="currentArticle.description"
+                  required
+                  placeholder="Write your article content here..."
+                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-[#CCB1F6] focus:border-[#CCB1F6] transition-all duration-300 resize-none">
+        </textarea>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-[#333333] mb-2">
+          Article Image
+        </label>
+
+        <!-- Image Preview -->
+        <div *ngIf="imagePreview" class="mb-4 relative group">
+          <img [src]="imagePreview" alt="Preview" class="w-full h-56 object-cover rounded-2xl shadow-lg">
+          <button type="button" (click)="removeImage()"
+                  class="absolute top-3 right-3 bg-[#F47552] text-white p-2.5 rounded-full hover:bg-[#F47552]/90 transition-all duration-300 shadow-lg hover:scale-110">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- File Input -->
+        <div class="border-2 border-dashed border-[#CCB1F6]/50 rounded-2xl p-8 text-center hover:border-[#CCB1F6] hover:bg-[#F8FEDA]/30 transition-all duration-300"
+             [class.opacity-50]="isUploadingImage">
+          <input type="file"
+                 #fileInput
+                 (change)="onFileSelected($event)"
+                 accept="image/*"
+                 [disabled]="isUploadingImage"
+                 class="hidden">
+
+          <div class="w-16 h-16 bg-gradient-to-br from-[#F8D459] to-[#CDE26D] rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+
+          <button type="button" (click)="fileInput.click()"
+                  [disabled]="isUploadingImage"
+                  class="px-6 py-2.5 bg-gradient-to-r from-[#CCB1F6] to-[#CCB1F6]/80 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            {{ isUploadingImage ? 'Uploading...' : 'Choose an Image' }}
+          </button>
+          <p class="text-sm text-gray-500 mt-3">PNG, JPG, GIF up to 10MB</p>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+        <button type="button" (click)="closeModal()"
+                [disabled]="isSubmitting"
+                class="px-8 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-all duration-300 disabled:opacity-50">
+          Cancel
+        </button>
+        <button type="submit"
+                [disabled]="isSubmitting || isUploadingImage"
+                class="px-8 py-3 bg-gradient-to-r from-[#CDE26D] to-[#CDE26D]/80 text-[#333333] font-semibold rounded-xl hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105">
+          {{ isSubmitting ? 'Processing...' : (isEditMode ? 'Update' : 'Create') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

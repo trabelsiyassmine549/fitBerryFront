@@ -1,0 +1,333 @@
+/* nutritionniste-form.component.css */
+:host { display: block; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.form-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F8FEDA 0%, #ffffff 50%, rgba(205,226,109,0.1) 100%);
+  padding: 24px;
+}
+
+/* Header */
+.form-header {
+  max-width: 750px;
+  margin: 0 auto 24px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #666;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: all 0.3s;
+  margin-bottom: 20px;
+}
+
+.back-btn:hover {
+  color: #5a8a00;
+  transform: translateX(-4px);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.header-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #CDE26D, #b8d14a);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 8px 24px rgba(205,226,109,0.35);
+}
+
+.header-content h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #333;
+}
+
+.header-content p {
+  color: #888;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Form Card */
+.form-card {
+  max-width: 750px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/* Profile Section */
+.profile-section {
+  background: linear-gradient(135deg, rgba(205,226,109,0.2), rgba(248,212,89,0.1));
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid rgba(205,226,109,0.2);
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #CDE26D, #F8D459);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 32px;
+  font-weight: 800;
+  text-transform: uppercase;
+  box-shadow: 0 8px 24px rgba(205,226,109,0.35);
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-info h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+}
+
+.specialite-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+  background: rgba(205,226,109,0.25);
+  color: #5a8a00;
+}
+
+.specialite-badge.default {
+  background: #f0f0f0;
+  color: #999;
+}
+
+.profile-stats {
+  text-align: center;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 24px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #333;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #888;
+  font-weight: 600;
+}
+
+/* Form Sections */
+.form-section {
+  padding: 28px 32px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.form-section:last-of-type { border-bottom: none; }
+
+.form-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group:last-child { margin-bottom: 0; }
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.required { color: #F47552; }
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: all 0.3s;
+  background: #fafafa;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #CDE26D;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(205,226,109,0.15);
+}
+
+.form-group input::placeholder { color: #bbb; }
+
+/* Input with Icon */
+.input-icon {
+  position: relative;
+}
+
+.input-icon span {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+}
+
+.input-icon input { padding-left: 48px; }
+
+/* Specialite Grid */
+.specialite-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.specialite-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #fafafa;
+}
+
+.specialite-option:hover {
+  border-color: #CDE26D;
+  background: #fff;
+}
+
+.specialite-option.selected {
+  border-color: #CDE26D;
+  background: rgba(205,226,109,0.12);
+  box-shadow: 0 4px 12px rgba(205,226,109,0.2);
+}
+
+.specialite-option input { display: none; }
+
+.spec-icon {
+  font-size: 22px;
+  width: 36px;
+  height: 36px;
+  background: rgba(205,226,109,0.15);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spec-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+/* Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  padding: 24px 32px;
+  background: #fafafa;
+}
+
+.btn-cancel {
+  padding: 14px 28px;
+  border: 2px solid #ddd;
+  background: #fff;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.btn-cancel:hover { background: #f5f5f5; border-color: #ccc; }
+
+.btn-submit {
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #CDE26D, #b8d14a);
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.3s;
+  box-shadow: 0 4px 14px rgba(205,226,109,0.3);
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(205,226,109,0.4);
+}
+
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form-page { padding: 16px; }
+  .form-row { grid-template-columns: 1fr; }
+  .specialite-grid { grid-template-columns: 1fr; }
+  .form-section { padding: 20px; }
+  .profile-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+}

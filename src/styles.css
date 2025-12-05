@@ -1,0 +1,91 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* --- Color Palette (Global) --- */
+:root {
+ --color-red: #e63946;
+ --color-bg-light-green: #f4fcf8;
+ --color-bg-medium-green: #eaf6ed; /* For CTA banner */
+ --color-btn-dark-green: #4a7c59;
+ --color-text-dark-green: #2f5c3c;
+ --color-text-dark: #333;
+ --color-text-light: #555;
+ --color-btn-light-green-gradient: linear-gradient(to right, #b6e3c3, #a8d7b5);
+}
+
+/* --- Base Styles (Global) --- */
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+}
+
+body {
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+ color: var(--color-text-dark);
+}
+
+/* Base section padding */
+section {
+ padding: 60px 8%;
+ flex-shrink: 0;
+}
+
+h2 {
+ font-size: 2.5rem; /* 40px */
+ font-weight: bold;
+}
+
+p {
+ font-size: 1.1rem;
+ color: var(--color-text-light);
+ line-height: 1.6;
+}
+
+/* --- Utility Classes (Global) --- */
+.text-red {
+ color: var(--color-red);
+}
+
+.text-dark-green {
+ color: var(--color-text-dark-green);
+}
+
+.check-icon {
+ color: var(--color-red);
+ font-size: 1.5rem;
+ margin-right: 15px;
+ font-weight: bold;
+}
+
+.section-title {
+ text-align: center;
+ margin-bottom: 40px;
+}
+.section-title h2 {
+ margin-bottom: 10px;
+}
+.section-title p {
+ max-width: 600px;
+ margin: 0 auto;
+}
+
+/* --- Base Button Styles (Global) --- */
+.btn {
+ border: none;
+ border-radius: 8px;
+ font-size: 1.1rem;
+ font-weight: 600;
+ padding: 15px 35px;
+ cursor: pointer;
+ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+ transition: transform 0.2s ease, box-shadow 0.2s ease;
+ text-decoration: none;
+ display: inline-block;
+ text-align: center;
+}
+.btn:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,234 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Navbar -->
+  <nav class="navbar-container">
+    <div class="navbar-content">
+      <div class="navbar-wrapper">
+        <!-- Logo -->
+        <div class="navbar-brand">
+          <img src="/assets/logoFitBerry.jpeg" alt="FitBerry Logo" class="brand-logo">
+          <span class="brand-text">FitBerry</span>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navbar-menu">
+          <button (click)="navigateToArticles()" class="nav-button">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            <span>Articles</span>
+          </button>
+           <button (click)="navigateToPlans()" class="nav-button">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+            </svg>
+            <span>My Plans</span>
+          </button>
+          <!-- Edit Profile Button -->
+          <button (click)="onEditProfile()" class="edit-profile-button">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+            <span>Edit</span>
+          </button>
+
+          <!-- User Section -->
+          <div class="navbar-user-section">
+
+            <app-notification-modal></app-notification-modal>
+
+            <div class="user-info">
+              <div class="user-avatar">
+                <span>{{ userInitials }}</span>
+              </div>
+              <span class="user-email">{{ isLoading ? 'Loading...' : userEmail }}</span>
+            </div>
+
+            <!-- Logout -->
+            <button (click)="logout()" class="logout-button">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+              </svg>
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile Summary Content -->
+  <div class="profile-summary">
+    <div class="summary-header" *ngIf="showSuccessMessage">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          style="width: 64px; height: 64px;">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+      <h1>Profile Saved Successfully</h1>
+      <p>Here is a summary of your nutrition profile</p>
+    </div>
+
+    <!-- Three Column Section -->
+    <div class="three-column-section">
+      <!-- Personal Info -->
+      <div class="summary-card">
+        <div class="card-header">
+          <div class="card-icon bg-coral">
+            <svg viewBox="0 0 24 24" fill="white" stroke="none" style="width: 32px; height: 32px;">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h3>Personal Information</h3>
+        </div>
+
+        <div class="card-content">
+          <div class="info-item">
+            <span class="info-label">Age</span>
+            <span class="info-value">{{ profileForm.get('age')?.value }} years</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Gender</span>
+            <span class="info-value">{{ profileForm.get('sexe')?.value }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Activity Level</span>
+            <span class="info-value">{{ profileForm.get('niveauActivite')?.value || 'Not specified' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Measurements -->
+      <div class="summary-card">
+        <div class="card-header">
+          <div class="card-icon bg-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+              style="width: 32px; height: 32px;">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+          </div>
+          <h3>Physical Measurements</h3>
+        </div>
+
+        <div class="card-content">
+          <div class="info-item">
+            <span class="info-label">Weight</span>
+            <span class="info-value">{{ profileForm.get('poids')?.value }} kg</span>
+          </div>
+
+          <div class="info-item">
+            <span class="info-label">Height</span>
+            <span class="info-value">{{ profileForm.get('taille')?.value }} cm</span>
+          </div>
+
+          <div class="info-item" *ngIf="imc">
+            <span class="info-label">BMI</span>
+            <span class="info-value">{{ imc }} <small [ngClass]="imcCategoryClass">({{ imcCategory }})</small></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nutritional Needs -->
+      <div class="summary-card">
+        <div class="card-header">
+          <div class="card-icon bg-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+              style="width: 32px; height: 32px;">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path>
+            </svg>
+          </div>
+          <h3>Nutritional Needs</h3>
+        </div>
+
+        <div class="card-content">
+          <div class="info-item highlight">
+            <span class="info-label">Recommended Daily Calories</span>
+            <span class="info-value calorie-value">{{ calories }} kcal</span>
+          </div>
+
+          <!-- Macros chart -->
+          <div class="macro-chart-container">
+            <div class="macro-chart">
+              <div class="chart-svg">
+                <svg viewBox="0 0 42 42" class="donut">
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f0f0f0" stroke-width="3"></circle>
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent"
+                          stroke="#FF6B4A" stroke-width="3"
+                          stroke-dasharray="30 100"
+                          stroke-dashoffset="0"></circle>
+
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent"
+                          stroke="#9B7EDE" stroke-width="3"
+                          stroke-dasharray="50 100"
+                          stroke-dashoffset="-30"></circle>
+
+                  <circle cx="21" cy="21" r="15.91549430918954" fill="transparent"
+                          stroke="#7FD15E" stroke-width="3"
+                          stroke-dasharray="20 100"
+                          stroke-dashoffset="-80"></circle>
+
+                  <text x="21" y="21" text-anchor="middle" dy="0.3em" class="chart-text">
+                    Macros
+                  </text>
+                </svg>
+              </div>
+
+              <div class="chart-legend">
+                <div class="legend-item" *ngFor="let macro of macroData">
+                  <div class="legend-color" [style.background-color]="macro.color"></div>
+                  <div class="legend-text">
+                    <span class="legend-name">{{ macro.name }}</span>
+                    <span class="legend-value">{{ macro.value }}g ({{ macro.percentage }}%)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Goals Section -->
+    <div class="summary-card full-width">
+      <div class="card-header">
+        <div class="card-icon bg-yellow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+            style="width: 32px; height: 32px;">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <h3>Your Goals</h3>
+      </div>
+
+      <div class="card-content">
+        <div class="objectives-content">
+          <p class="objectives-text" *ngIf="profileForm.get('objectifs')?.value; else noObjectives">
+            {{ profileForm.get('objectifs')?.value }}
+          </p>
+
+          <ng-template #noObjectives>
+            <p class="no-objectives">No goals specified yet.</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,278 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <div class="logo-section">
+        <img src="assets/logoFitBerry.jpeg" alt="FitBerry Logo" class="logo">
+       <h1><a href="http://localhost:4200/">FitBerry</a></h1>
+      </div>
+      <h2>Create Your Account</h2>
+      <p class="subtitle">Start your wellness journey today</p>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-step" [class.active]="currentStep >= 1" [class.completed]="currentStep > 1">
+        <div class="step-circle">
+          <svg *ngIf="currentStep === 1" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <svg *ngIf="currentStep > 1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <span>Personal Info</span>
+      </div>
+      <div class="progress-line" [class.active]="currentStep > 1"></div>
+      <div class="progress-step" [class.active]="currentStep >= 2">
+        <div class="step-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <span>Account Setup</span>
+      </div>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <!-- Step 1: Personal Information -->
+      <div class="form-step" *ngIf="currentStep === 1">
+        <!-- Nutritionist-specific fields -->
+        <div class="form-row" *ngIf="isNutritionist">
+          <div class="form-group">
+            <label for="prenom">First Name (Prénom)</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input
+                type="text"
+                id="prenom"
+                formControlName="prenom"
+                placeholder="Jean"
+                [class.error]="registerForm.get('prenom')?.invalid && registerForm.get('prenom')?.touched"
+              >
+            </div>
+            <span class="error-message" *ngIf="registerForm.get('prenom')?.invalid && registerForm.get('prenom')?.touched">
+              {{ getErrorMessage('prenom') }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="nom">Last Name (Nom)</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input
+                type="text"
+                id="nom"
+                formControlName="nom"
+                placeholder="Dupont"
+                [class.error]="registerForm.get('nom')?.invalid && registerForm.get('nom')?.touched"
+              >
+            </div>
+            <span class="error-message" *ngIf="registerForm.get('nom')?.invalid && registerForm.get('nom')?.touched">
+              {{ getErrorMessage('nom') }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="john.doe@example.com"
+              [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+            >
+          </div>
+          <span class="error-message" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            {{ getErrorMessage('email') }}
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>I am a:</label>
+          <div class="user-type-selector">
+            <label class="user-type-option" [class.selected]="registerForm.get('role')?.value === 'CLIENT'">
+              <input type="radio" formControlName="role" value="CLIENT">
+              <div class="option-content">
+                <div class="option-icon">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </div>
+                <span class="option-text">Client</span>
+                <span class="option-desc">Looking for nutrition guidance</span>
+              </div>
+            </label>
+            <label class="user-type-option" [class.selected]="registerForm.get('role')?.value === 'NUTRITIONNISTE'">
+              <input type="radio" formControlName="role" value="NUTRITIONNISTE">
+              <div class="option-content">
+                <div class="option-icon">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+                </div>
+                <span class="option-text">Nutritionist</span>
+                <span class="option-desc">Providing professional advice</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <button type="button" class="btn-next" (click)="nextStep()">
+          Continue
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Step 2: Account Setup -->
+      <div class="form-step" *ngIf="currentStep === 2">
+        <div class="form-group">
+          <label for="motDePasse">Password</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="motDePasse"
+              formControlName="motDePasse"
+              placeholder="Create a strong password"
+              [class.error]="registerForm.get('motDePasse')?.invalid && registerForm.get('motDePasse')?.touched"
+            >
+            <button type="button" class="toggle-password" (click)="togglePassword()">
+              <svg *ngIf="!showPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg *ngIf="showPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="password-strength" *ngIf="registerForm.get('motDePasse')?.value">
+            <div class="strength-bar">
+              <div class="strength-fill" [class.weak]="getPasswordStrength() === 'weak'"
+                   [class.medium]="getPasswordStrength() === 'medium'"
+                   [class.strong]="getPasswordStrength() === 'strong'"></div>
+            </div>
+            <span class="strength-text" [class.weak]="getPasswordStrength() === 'weak'"
+                  [class.medium]="getPasswordStrength() === 'medium'"
+                  [class.strong]="getPasswordStrength() === 'strong'">
+              {{ getPasswordStrength() | titlecase }} Password
+            </span>
+          </div>
+          <span class="error-message" *ngIf="registerForm.get('motDePasse')?.invalid && registerForm.get('motDePasse')?.touched">
+            {{ getErrorMessage('motDePasse') }}
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              placeholder="Re-enter your password"
+              [class.error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+            >
+            <button type="button" class="toggle-password" (click)="toggleConfirmPassword()">
+              <svg *ngIf="!showConfirmPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg *ngIf="showConfirmPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <span class="error-message" *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched">
+            Passwords do not match
+          </span>
+        </div>
+
+        <div class="form-group terms-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="agreeToTerms">
+            <span class="checkmark"></span>
+            <span>I agree to the <a routerLink="/terms" target="_blank">Terms & Conditions</a> and <a routerLink="/privacy" target="_blank">Privacy Policy</a></span>
+          </label>
+          <span class="error-message" *ngIf="registerForm.get('agreeToTerms')?.invalid && registerForm.get('agreeToTerms')?.touched">
+            You must agree to the terms and conditions
+          </span>
+        </div>
+
+        <div class="button-group">
+          <button type="button" class="btn-back" (click)="prevStep()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            Back
+          </button>
+          <button type="submit" class="btn-submit" [disabled]="isLoading">
+            <span *ngIf="!isLoading">Create Account</span>
+            <span *ngIf="isLoading" class="loading-content">
+              <svg class="spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+              </svg>
+              Creating...
+            </span>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="divider" *ngIf="currentStep === 1">
+      <br>
+      <span>or sign up with</span>
+    </div>
+
+    <div class="social-buttons" *ngIf="currentStep === 1">
+      <button type="button" class="btn-social google">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M19.8 10.2273C19.8 9.51818 19.7364 8.83636 19.6182 8.18182H10.2V12.05H15.5818C15.3273 13.3 14.5727 14.3591 13.4636 15.0682V17.5773H16.7636C18.7227 15.8364 19.8 13.2727 19.8 10.2273Z" fill="#4285F4"/>
+          <path d="M10.2 20C12.9 20 15.1636 19.1045 16.7636 17.5773L13.4636 15.0682C12.5409 15.6682 11.3727 16.0227 10.2 16.0227C7.59545 16.0227 5.39091 14.2636 4.58636 11.9H1.16364V14.4909C2.75455 17.6591 6.22727 20 10.2 20Z" fill="#34A853"/>
+          <path d="M4.58636 11.9C4.36364 11.3 4.23636 10.6591 4.23636 10C4.23636 9.34091 4.36364 8.7 4.58636 8.1V5.50909H1.16364C0.418182 6.99091 0 8.65455 0 10C0 11.3455 0.418182 13.0091 1.16364 14.4909L4.58636 11.9Z" fill="#FBBC05"/>
+          <path d="M10.2 3.97727C11.4818 3.97727 12.6227 4.40909 13.5273 5.27273L16.4636 2.33636C15.1591 1.11818 12.9 0.5 10.2 0.5C6.22727 0.5 2.75455 2.84091 1.16364 5.50909L4.58636 8.1C5.39091 5.73636 7.59545 3.97727 10.2 3.97727Z" fill="#EA4335"/>
+        </svg>
+        Google
+      </button>
+
+      <button type="button" class="btn-social apple">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M16.5 10.5c0-1.5.6-2.9 1.7-3.9-.6-.9-1.6-1.5-2.7-1.6-1.2-.1-2.3.7-2.9.7-.6 0-1.6-.7-2.6-.7-1.3.1-2.5.8-3.2 1.9-1.4 2.4-.4 5.9.9 7.8.7.9 1.4 2 2.5 1.9 1-.1 1.4-.6 2.6-.6s1.5.6 2.6.6c1.1 0 1.8-.9 2.4-1.8.5-.7.8-1.4 1-2.2-2.2-.8-2.3-4-2.3-4.1zm-2.1-6.3c.6-.7.9-1.7.8-2.7-.8 0-1.7.5-2.3 1.2-.5.6-.9 1.6-.8 2.5.9.1 1.7-.4 2.3-1z"/>
+        </svg>
+        Apple
+      </button>
+    </div>
+
+    <div class="login-link">
+      <p>Already have an account? <a routerLink="/login">Sign in</a></p>
+    </div>
+  </div>
+
+  <div class="register-illustration">
+    <img src="assets/login.jpg" alt="Wellness Journey" class="illustration-img">
+  </div>
+</div>

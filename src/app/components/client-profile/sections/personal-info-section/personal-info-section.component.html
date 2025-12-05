@@ -1,0 +1,87 @@
+<div class="step-content">
+  <div class="step-header">
+    <div class="step-icon bg-coral">
+      <svg viewBox="0 0 24 24" fill="white" stroke="none" style="width: 56px; height: 56px;">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    </div>
+    <div class="step-header-content">
+      <h2>Personal Information</h2>
+      <p>Start by telling us a bit about yourself</p>
+    </div>
+  </div>
+
+  <div class="form-fields" [formGroup]="profileForm">
+    <!-- Age -->
+    <div class="form-group">
+      <label class="form-label">
+        <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+          <circle cx="12" cy="12" r="1"></circle>
+          <path d="M12 1v6m0 6v6"></path>
+          <circle cx="12" cy="12" r="9"></circle>
+        </svg>
+        What is your age? *
+      </label>
+      <input
+        type="number"
+        class="form-input"
+        formControlName="age"
+        placeholder="Ex: 25"
+        [class.error]="profileForm.get('age')?.invalid && profileForm.get('age')?.touched"
+      />
+      <span class="error-text" *ngIf="profileForm.get('age')?.invalid && profileForm.get('age')?.touched">
+        Please enter your age
+      </span>
+    </div>
+
+    <!-- Gender -->
+    <div class="form-group">
+      <label class="form-label">
+        <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+          <path d="M12 6v6l4.25 2.52"></path>
+        </svg>
+        Your gender *
+      </label>
+      <div class="radio-group">
+        <label class="radio-option" [class.selected]="profileForm.get('sexe')?.value === 'Male'">
+          <input type="radio" formControlName="sexe" value="Male">
+          <svg class="radio-icon" viewBox="0 0 24 24" fill="currentColor" style="width: 42px; height: 42px;">
+            <circle cx="10" cy="8" r="4"></circle>
+            <path d="M10 14c-4 0-6 2-6 2v3h12v-3s-2-2-6-2z"></path>
+          </svg>
+          <span class="radio-text">Male</span>
+        </label>
+
+        <label class="radio-option" [class.selected]="profileForm.get('sexe')?.value === 'Female'">
+          <input type="radio" formControlName="sexe" value="Female">
+          <svg class="radio-icon" viewBox="0 0 24 24" fill="currentColor" style="width: 42px; height: 42px;">
+            <circle cx="10" cy="8" r="4"></circle>
+            <path d="M10 14c-4 0-6 2-6 2v3h12v-3s-2-2-6-2z"></path>
+          </svg>
+          <span class="radio-text">Female</span>
+        </label>
+      </div>
+      <span class="error-text" *ngIf="profileForm.get('sexe')?.invalid && profileForm.get('sexe')?.touched">
+        Please select your gender
+      </span>
+    </div>
+
+    <!-- Activity Level -->
+    <div class="form-group">
+      <label class="form-label">
+        <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        </svg>
+        Your physical activity level
+      </label>
+      <select class="form-input" formControlName="niveauActivite">
+        <option value="">Choose your level</option>
+        <option *ngFor="let option of niveauActiviteOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>

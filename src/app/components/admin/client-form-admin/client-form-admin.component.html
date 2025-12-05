@@ -1,0 +1,170 @@
+<div class="form-page">
+  <!-- Header -->
+  <header class="form-header">
+    <button class="back-btn" (click)="onCancel()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="currentColor"/>
+      </svg>
+      <span>Back to Users</span>
+    </button>
+    <div class="header-content">
+      <h1>{{ pageTitle() }}</h1>
+      <p>{{ isEditMode ? 'Update user email and role' : 'Fill in the user information below' }}</p>
+    </div>
+  </header>
+
+  <!-- Notification -->
+  <div *ngIf="showNotification()" class="notification" [class]="showNotification()?.type">
+    {{ showNotification()?.message }}
+  </div>
+
+  <!-- Form Card -->
+  <div class="form-card">
+    <form (ngSubmit)="onSubmit()">
+      <!-- Avatar Preview (only show if editing) -->
+      <div class="avatar-section" *ngIf="isEditMode">
+        <div class="avatar-preview">
+          {{ userData().prenom?.[0] || 'U' }}{{ userData().nom?.[0] || '' }}
+        </div>
+        <div class="avatar-info">
+          <h3>{{ userData().prenom || 'User' }} {{ userData().nom || '' }}</h3>
+          <span class="role-badge" [class]="userData().role.toLowerCase()">
+            {{ getRoleLabel(userData().role) }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Personal Information (only for creation) -->
+      <div class="form-section" *ngIf="!isEditMode">
+        <h4>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+          </svg>
+          Personal Information
+        </h4>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prenom">First Name <span class="required">*</span></label>
+            <input
+              type="text"
+              id="prenom"
+              [value]="userData().prenom"
+              (input)="updateField('prenom', $event)"
+              placeholder="Enter first name"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="nom">Last Name <span class="required">*</span></label>
+            <input
+              type="text"
+              id="nom"
+              [value]="userData().nom"
+              (input)="updateField('nom', $event)"
+              placeholder="Enter last name"
+              required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="motDePasse">Password <span class="required">*</span></label>
+          <div class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="currentColor"/>
+            </svg>
+            <input
+              type="password"
+              id="motDePasse"
+              [value]="userData().motDePasse"
+              (input)="updateField('motDePasse', $event)"
+              placeholder="Enter password"
+              minlength="6"
+              required>
+          </div>
+          <small>Minimum 6 characters required</small>
+        </div>
+      </div>
+
+      <!-- Account Settings -->
+      <div class="form-section">
+        <h4>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.14 12.94C19.18 12.64 19.2 12.33 19.2 12C19.2 11.68 19.18 11.36 19.13 11.06L21.16 9.48C21.34 9.34 21.39 9.07 21.28 8.87L19.36 5.55C19.24 5.33 18.99 5.26 18.77 5.33L16.38 6.29C15.88 5.91 15.35 5.59 14.76 5.35L14.4 2.81C14.36 2.57 14.16 2.4 13.92 2.4H10.08C9.84 2.4 9.65 2.57 9.61 2.81L9.25 5.35C8.66 5.59 8.12 5.92 7.63 6.29L5.24 5.33C5.02 5.25 4.77 5.33 4.65 5.55L2.74 8.87C2.62 9.08 2.66 9.34 2.86 9.48L4.89 11.06C4.84 11.36 4.8 11.69 4.8 12C4.8 12.31 4.82 12.64 4.87 12.94L2.84 14.52C2.66 14.66 2.61 14.93 2.72 15.13L4.64 18.45C4.76 18.67 5.01 18.74 5.23 18.67L7.62 17.71C8.12 18.09 8.65 18.41 9.24 18.65L9.6 21.19C9.65 21.43 9.84 21.6 10.08 21.6H13.92C14.16 21.6 14.36 21.43 14.39 21.19L14.75 18.65C15.34 18.41 15.88 18.09 16.37 17.71L18.76 18.67C18.98 18.75 19.23 18.67 19.35 18.45L21.27 15.13C21.39 14.91 21.34 14.66 21.15 14.52L19.14 12.94ZM12 15.6C10.02 15.6 8.4 13.98 8.4 12C8.4 10.02 10.02 8.4 12 8.4C13.98 8.4 15.6 10.02 15.6 12C15.6 13.98 13.98 15.6 12 15.6Z" fill="currentColor"/>
+          </svg>
+          Account Settings
+        </h4>
+
+        <div class="form-group">
+          <label for="email">Email Address <span class="required">*</span></label>
+          <div class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+            </svg>
+            <input
+              type="email"
+              id="email"
+              [value]="userData().email"
+              (input)="updateField('email', $event)"
+              placeholder="user@example.com"
+              required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="role">User Role <span class="required">*</span></label>
+          <div class="role-selector">
+            <label class="role-option" [class.selected]="userData().role === 'CLIENT'">
+              <input
+                type="radio"
+                name="role"
+                value="CLIENT"
+                [checked]="userData().role === 'CLIENT'"
+                (change)="updateField('role', $event)">
+              <div class="role-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="role-name">Client</span>
+            </label>
+            <label class="role-option" [class.selected]="userData().role === 'NUTRITIONNISTE'">
+              <input
+                type="radio"
+                name="role"
+                value="NUTRITIONNISTE"
+                [checked]="userData().role === 'NUTRITIONNISTE'"
+                (change)="updateField('role', $event)">
+              <div class="role-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2M15.9 8.1C17.7 8.1 19.2 9.6 19.2 11.4V14H17V22H7V14H4.8V11.4C4.8 9.6 6.3 8.1 8.1 8.1H15.9Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="role-name">Nutritionist</span>
+            </label>
+          </div>
+          <small>{{ isEditMode ? 'Only email and role can be changed in edit mode' : 'Select the appropriate role for this user' }}</small>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="onCancel()">
+          Cancel
+        </button>
+        <button type="submit" class="btn-submit" [disabled]="isSubmitting() || !isFormValid()">
+          <svg *ngIf="isSubmitting()" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="spinner">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor" opacity="0.3"/>
+            <path d="M12 2C13.0609 2 14.0783 2.21071 15.0104 2.58579" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span *ngIf="isSubmitting()">Saving...</span>
+          <svg *ngIf="!isSubmitting()" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="currentColor"/>
+          </svg>
+          <span *ngIf="!isSubmitting()">
+            {{ isEditMode ? 'Update User' : 'Create User' }}
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

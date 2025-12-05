@@ -1,0 +1,109 @@
+<div class="form-page">
+  <!-- Header -->
+  <header class="form-header">
+    <button class="back-btn" (click)="onCancel()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="currentColor"/>
+      </svg>
+      <span>Back to Articles</span>
+    </button>
+    <div class="header-content">
+      <h1>{{ pageTitle() }}</h1>
+      <p>Edit article content and details</p>
+    </div>
+  </header>
+
+  <!-- Notification -->
+  <div *ngIf="showNotification()" class="notification" [class]="showNotification()?.type">
+    {{ showNotification()?.message }}
+  </div>
+
+  <!-- Form Card -->
+  <div class="form-layout">
+    <div class="form-card">
+      <h2>Article Information</h2>
+
+      <form (ngSubmit)="onSubmit()">
+        <!-- Title & Description Section -->
+        <div class="form-section">
+          <div class="form-group">
+            <label for="titre">Article Title <span class="required">*</span></label>
+            <input
+              type="text"
+              id="titre"
+              [value]="articleData().titre"
+              (input)="updateField('titre', $event)"
+              placeholder="Enter a compelling article title"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description <span class="required">*</span></label>
+            <textarea
+              id="description"
+              rows="5"
+              [value]="articleData().description"
+              (input)="updateField('description', $event)"
+              placeholder="Write a detailed description of your article content..."
+              required></textarea>
+          </div>
+        </div>
+
+        <!-- Image Section -->
+        <div class="form-section">
+          <div class="form-group">
+            <label for="imageUrl">Cover Image</label>
+            <input
+              type="file"
+              id="imageUrl"
+              accept="image/*"
+              (change)="onImageChange($event)"
+              [disabled]="isUploadingImage()">
+
+            <div *ngIf="isUploadingImage()" class="upload-progress">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="spinner">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor" opacity="0.3"/>
+                <path d="M12 2C13.0609 2 14.0783 2.21071 15.0104 2.58579" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <span>Uploading image...</span>
+            </div>
+
+            <div *ngIf="articleData().imageURL && !isUploadingImage()" class="image-preview">
+              <img [src]="articleData().imageURL" alt="Article cover preview">
+              <button type="button" class="remove-image" (click)="removeImage()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
+                </svg>
+                Remove
+              </button>
+            </div>
+
+            <small>
+              Supported formats: JPG, PNG, GIF. Maximum file size: 5MB
+            </small>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="onCancel()">
+            Cancel
+          </button>
+          <button type="submit" class="btn-submit" [disabled]="isSubmitting() || !isFormValid() || isUploadingImage()">
+            <svg *ngIf="isSubmitting()" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="spinner">
+              <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor" opacity="0.3"/>
+              <path d="M12 2C13.0609 2 14.0783 2.21071 15.0104 2.58579" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span *ngIf="isSubmitting()">Saving...</span>
+            <svg *ngIf="!isSubmitting()" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="currentColor"/>
+            </svg>
+            <span *ngIf="!isSubmitting()">
+              {{ isEditMode ? 'Update Article' : 'Create Article' }}
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

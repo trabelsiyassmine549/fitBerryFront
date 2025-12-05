@@ -1,0 +1,80 @@
+<div class="notification-container">
+  <button (click)="toggleModal()" class="notification-bell" [class.has-notifications]="unreadCount > 0">
+    <svg class="bell-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+    </svg>
+    <span class="notification-badge" *ngIf="unreadCount > 0">
+      {{ unreadCount > 99 ? '99+' : unreadCount }}
+    </span>
+  </button>
+
+  <div class="notification-modal" *ngIf="isOpen">
+    <div class="modal-header">
+      <div class="header-left">
+        <h3 class="modal-title">Notifications</h3>
+        <span class="notification-count" *ngIf="unreadCount > 0">{{ unreadCount }} new</span>
+      </div>
+      <div class="header-actions">
+        <button
+          (click)="clearAllNotifications()"
+          class="clear-all-button"
+          *ngIf="notifications.length > 0"
+          title="Clear all notifications">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+        </button>
+        <button (click)="closeModal()" class="close-button" title="Close">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-content">
+      <div class="loading-state" *ngIf="isLoading">
+        <div class="spinner"></div>
+        <p>Loading notifications...</p>
+      </div>
+
+      <div class="empty-state" *ngIf="!isLoading && notifications.length === 0">
+        <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+        </svg>
+        <h4>No notifications</h4>
+        <p>You are all caught up!</p>
+      </div>
+
+      <div class="notifications-list" *ngIf="!isLoading && notifications.length > 0">
+        <div
+          class="notification-item"
+          *ngFor="let notification of notifications; trackBy: trackByNotificationId">
+          <div class="notification-icon">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                [attr.d]="getNotificationIcon(notification.description)"/>
+            </svg>
+          </div>
+
+          <div class="notification-content">
+            <p class="notification-description">{{ notification.description }}</p>
+            <span class="notification-time">{{ formatNotificationTime(notification) }}</span>
+          </div>
+
+          <button
+            (click)="deleteNotification(notification.id, $event)"
+            class="delete-button"
+            title="Delete notification">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

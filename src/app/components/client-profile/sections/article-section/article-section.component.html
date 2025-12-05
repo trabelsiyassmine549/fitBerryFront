@@ -1,0 +1,152 @@
+<div class="min-h-screen bg-gradient-to-br from-[#F8FEDA] via-white to-[#CCB1F6]/20">
+  <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+    <!-- Header -->
+    <div class="header-section">
+      <button class="back-button" (click)="goBackToProfile()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 19l-7-7 7-7"/>
+        </svg>
+        Back to Profile
+      </button>
+
+      <div>
+        <h2 class="page-title">Nutrition Articles</h2>
+        <div class="title-underline"></div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoadingArticles" class="loading-container">
+      <div class="spinner"></div>
+      <p class="loading-text">Loading articles...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoadingArticles && articles.length === 0" class="empty-state">
+      <div class="empty-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+      </div>
+      <p class="empty-title">No Articles Found</p>
+      <p class="empty-subtitle">No articles available at the moment</p>
+    </div>
+
+    <!-- Articles Grid -->
+    <div class="articles-grid" *ngIf="!isLoadingArticles && articles.length > 0">
+      <div *ngFor="let article of articles" class="article-card">
+
+        <!-- Article Image -->
+        <div class="article-image-container">
+          <img
+            [src]="getImageUrl(article.imageURL)"
+            [alt]="article.titre"
+            (error)="handleImageError($event)"
+            class="article-image"
+            loading="lazy">
+          <div class="image-overlay"></div>
+        </div>
+
+        <!-- Article Content -->
+        <div class="article-content">
+          <h3 class="article-title">{{ article.titre }}</h3>
+          <p class="article-description">{{ article.description }}</p>
+
+          <!-- Author Info -->
+          <div *ngIf="article.auteurNom || article.auteurPrenom" class="author-info">
+            <div class="author-avatar">
+              <span>{{ (article.auteurPrenom || 'A')[0] }}</span>
+            </div>
+            <span class="author-name">{{ article.auteurPrenom }} {{ article.auteurNom }}</span>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <div class="article-footer">
+          <button
+            (click)="selectedArticleId === article.id ? closeComments() : viewComments(article.id)"
+            class="view-comments-btn"
+            [class.active]="selectedArticleId === article.id">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            {{ selectedArticleId === article.id ? 'Hide Comments' : 'View Comments' }}
+          </button>
+        </div>
+
+        <!-- Comments Section -->
+        <div *ngIf="selectedArticleId === article.id" class="comments-section">
+          <div class="comments-header">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+            </svg>
+            <h4>Comments ({{ commentaires.length }})</h4>
+          </div>
+
+          <!-- Loading Comments -->
+          <div *ngIf="isLoadingComments" class="loading-container-small">
+            <div class="spinner-small"></div>
+            <p>Loading comments...</p>
+          </div>
+
+          <!-- No Comments -->
+          <div *ngIf="!isLoadingComments && commentaires.length === 0" class="no-comments">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            <p>No comments yet. Be the first to comment!</p>
+          </div>
+
+          <!-- Comments List -->
+          <div *ngIf="!isLoadingComments && commentaires.length > 0" class="comments-list">
+            <div *ngFor="let c of commentaires" class="comment-card">
+              <div class="comment-header">
+                <strong class="comment-title">{{ c.titre }}</strong>
+                <span class="comment-user">Utilisateur #{{ c.userId }}</span>
+              </div>
+              <p class="comment-description">{{ c.description }}</p>
+              <small class="comment-date" *ngIf="c.createdAt">
+                {{ c.createdAt | date:'dd/MM/yyyy à HH:mm' }}
+              </small>
+            </div>
+          </div>
+
+          <!-- Add Comment Form -->
+          <div class="add-comment-form">
+            <div class="form-header">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+              </svg>
+              <h5>Add a Comment</h5>
+            </div>
+            <input
+              [(ngModel)]="newComment.titre"
+              placeholder="Comment title"
+              class="form-input"
+              maxlength="100"
+              [disabled]="isSubmittingComment">
+            <textarea
+              [(ngModel)]="newComment.description"
+              placeholder="Your comment..."
+              class="form-textarea"
+              rows="4"
+              maxlength="500"
+              [disabled]="isSubmittingComment"></textarea>
+            <button
+              class="submit-comment-btn"
+              (click)="addComment()"
+              [disabled]="!newComment.titre || !newComment.description || isSubmittingComment">
+              <svg *ngIf="!isSubmittingComment" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+              </svg>
+              <span class="spinner-small" *ngIf="isSubmittingComment"></span>
+              {{ isSubmittingComment ? 'Publishing...' : 'Publish Comment' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="min-h-screen bg-gradient-to-br from-[#F8FEDA] via-white to-[#CCB1F6]/20 py-8">
+  <div class="max-w-2xl mx-auto p-8">
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-[#F8FEDA] to-[#CCB1F6]/20 p-8 border-b border-gray-200">
+        <h2 class="text-3xl font-bold text-[#333333] mb-2">
+          Edit Article
+        </h2>
+        <div class="h-1 w-20 bg-gradient-to-r from-[#F47552] to-[#F8D459] rounded-full"></div>
+      </div>
+
+      <form *ngIf="article" (ngSubmit)="updateArticle()" class="p-8">
+
+        <div class="mb-6">
+          <label for="titre" class="block text-sm font-semibold text-[#333333] mb-2">Title</label>
+          <input type="text" id="titre" name="titre"
+                 [(ngModel)]="article.titre"
+                 required
+                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-[#CCB1F6] focus:border-[#CCB1F6] transition-all duration-300">
+        </div>
+
+        <div class="mb-6">
+          <label for="description" class="block text-sm font-semibold text-[#333333] mb-2">Description</label>
+          <textarea id="description" name="description" rows="6"
+                    [(ngModel)]="article.description"
+                    required
+                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-[#CCB1F6] focus:border-[#CCB1F6] transition-all duration-300 resize-none">
+          </textarea>
+        </div>
+
+        <div class="mb-8">
+          <label for="imageURL" class="block text-sm font-semibold text-[#333333] mb-2">Image URL</label>
+          <input type="text" id="imageURL" name="imageURL"
+                 [(ngModel)]="article.imageURL"
+                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-[#CCB1F6] focus:border-[#CCB1F6] transition-all duration-300">
+        </div>
+
+        <button type="submit"
+                class="w-full px-6 py-4 bg-gradient-to-r from-[#CCB1F6] to-[#CCB1F6]/80 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+          Update
+        </button>
+      </form>
+
+      <div *ngIf="!article" class="p-12 text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-[#F8D459] to-[#CDE26D] rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+        </div>
+        <p class="text-gray-500 font-medium">Loading article...</p>
+      </div>
+
+    </div>
+  </div>
+</div>

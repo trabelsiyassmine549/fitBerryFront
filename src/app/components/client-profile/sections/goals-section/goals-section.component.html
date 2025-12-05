@@ -1,0 +1,41 @@
+<div class="step-content">
+  <div class="step-header">
+    <div class="step-icon bg-green">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 56px; height: 56px;">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+        <path d="M4 22h16"></path>
+        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+        <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path>
+      </svg>
+    </div>
+    <h2>Your Nutrition Goals</h2>
+    <p>What would you like to achieve?</p>
+  </div>
+
+  <div class="form-fields" [formGroup]="profileForm">
+    <div class="form-group">
+      <label class="form-label">
+        <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        Describe your goals
+      </label>
+      <textarea
+        class="form-textarea"
+        formControlName="objectifs"
+        rows="6"
+        placeholder="Example: I want to lose weight in a healthy way, improve my daily energy levels, and adopt a more balanced diet..."
+      ></textarea>
+      <small class="form-hint">
+        <svg class="hint-icon" viewBox="0 0 24 24" fill="currentColor" style="width: 16px; height: 16px;">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 8v4M12 16h.01" stroke="white" stroke-width="2" fill="none"/>
+        </svg>
+        The more specific you are, the better we can help you
+      </small>
+    </div>
+  </div>
+</div>

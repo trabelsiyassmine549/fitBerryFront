@@ -1,0 +1,54 @@
+<div class="step-content">
+  <div class="step-header">
+    <div class="step-icon bg-yellow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 56px; height: 56px;">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+      </svg>
+    </div>
+    <h2>Health Information</h2>
+    <p>Help us personalize your recommendations</p>
+  </div>
+
+  <div class="form-fields" [formGroup]="profileForm">
+    <!-- Allergies -->
+    <div class="form-group">
+      <label class="form-label">
+        <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+          <line x1="15" y1="9" x2="9" y2="15"></line>
+          <line x1="9" y1="9" x2="15" y2="15"></line>
+        </svg>
+        Do you have any food allergies?
+      </label>
+      <textarea
+        class="form-textarea"
+        formControlName="allergies"
+        rows="4"
+        placeholder="Example: Lactose, gluten, nuts, shellfish..."
+      ></textarea>
+    </div>
+
+    <!-- Chronic illnesses -->
+    <div class="form-group">
+      <label class="form-label">
+        <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        Do you have any chronic illnesses?
+      </label>
+      <textarea
+        class="form-textarea"
+        formControlName="maladiesChroniques"
+        rows="4"
+        placeholder="Example: Diabetes, hypertension, cholesterol..."
+      ></textarea>
+      <small class="form-hint">
+        <svg class="hint-icon" viewBox="0 0 24 24" fill="currentColor" style="width: 16px; height: 16px;">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+          <path d="M12 8v5l4 2.5" stroke="white" stroke-width="2" fill="none"/>
+        </svg>
+        This information remains confidential
+      </small>
+    </div>
+  </div>
+</div>

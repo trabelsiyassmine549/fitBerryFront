@@ -1,0 +1,163 @@
+<div class="wizard-container">
+  <div class="container">
+
+    <!-- Profile Summary Section -->
+    <app-profile-summary
+      *ngIf="showProfileSummary"
+      [profileForm]="profileForm"
+      [imc]="getDisplayImc()"
+      [imcCategory]="getImcCategory()"
+      [imcCategoryClass]="getImcCategoryClass()"
+      (editProfile)="editProfile()">
+    </app-profile-summary>
+
+    <!-- Wizard Form Section (hidden when summary is shown) -->
+    <div *ngIf="!showProfileSummary" class="wizard">
+
+      <!-- Progress Bar -->
+      <div class="progress-wrapper">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+        </div>
+        <div class="progress-text">Step {{ currentStep }} of {{ totalSteps }}</div>
+      </div>
+
+      <!-- Step Indicators -->
+      <div class="step-indicators">
+        <div class="step-indicator"
+            [class.active]="currentStep === 1"
+            [class.completed]="currentStep > 1"
+            (click)="goToStep(1)">
+          <div class="step-number">1</div>
+          <div class="step-label">Personal Info</div>
+        </div>
+
+        <div class="step-indicator"
+            [class.active]="currentStep === 2"
+            [class.completed]="currentStep > 2"
+            (click)="goToStep(2)">
+          <div class="step-number">2</div>
+          <div class="step-label">Measurements</div>
+        </div>
+
+        <div class="step-indicator"
+            [class.active]="currentStep === 3"
+            [class.completed]="currentStep > 3"
+            (click)="goToStep(3)">
+          <div class="step-number">3</div>
+          <div class="step-label">Goals</div>
+        </div>
+
+        <div class="step-indicator"
+            [class.active]="currentStep === 4"
+            [class.completed]="currentStep > 4"
+            (click)="goToStep(4)">
+          <div class="step-number">4</div>
+          <div class="step-label">Health</div>
+        </div>
+      </div>
+
+      <!-- Alerts -->
+      <div *ngIf="successMessage" class="alert alert-success">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        {{ successMessage }}
+        <button type="button" class="alert-close" (click)="successMessage = ''">&times;</button>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-error">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        {{ errorMessage }}
+        <button type="button" class="alert-close" (click)="errorMessage = ''">&times;</button>
+      </div>
+
+      <!-- Form Card -->
+      <div class="form-card">
+        <form [formGroup]="profileForm">
+
+          <!-- Step 1: Personal Information -->
+          <app-personal-info-section
+            *ngIf="currentStep === 1"
+            [profileForm]="profileForm"
+            [niveauActiviteOptions]="niveauActiviteOptions">
+          </app-personal-info-section>
+
+          <!-- Step 2: Physical Measurements -->
+          <app-measurements-section
+            *ngIf="currentStep === 2"
+            [profileForm]="profileForm"
+            [displayImc]="getDisplayImc()"
+            [imcCategory]="getImcCategory()"
+            [imcCategoryClass]="getImcCategoryClass()">
+          </app-measurements-section>
+
+          <!-- Step 3: Goals -->
+          <app-goals-section
+            *ngIf="currentStep === 3"
+            [profileForm]="profileForm">
+          </app-goals-section>
+
+          <!-- Step 4: Health Information -->
+          <app-health-section
+            *ngIf="currentStep === 4"
+            [profileForm]="profileForm">
+          </app-health-section>
+
+        </form>
+
+        <!-- Navigation Buttons -->
+        <div class="step-navigation">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            *ngIf="currentStep > 1"
+            (click)="previousStep()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Previous
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            *ngIf="currentStep < totalSteps"
+            (click)="nextStep()">
+            Next
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-success"
+            *ngIf="currentStep === totalSteps"
+            [disabled]="isLoading"
+            (click)="onSubmit()">
+            <span *ngIf="!isLoading" style="display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Save My Profile
+            </span>
+
+            <span *ngIf="isLoading" style="display: flex; align-items: center; gap: 8px;">
+              <span class="spinner"></span>
+              Saving...
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
